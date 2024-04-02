@@ -12,23 +12,72 @@ const LoginSignup = () => {
 
     const handleSignUp = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/users', {
+            const response = await fetch('http://localhost:8080/api/v1/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password }), // Zmiana name na login
+                body: JSON.stringify({ name, email, password }),
             });
 
             if (response.ok) {
-                // Tutaj możesz dodać kod obsługi udanego utworzenia użytkownika
                 console.log('Użytkownik został utworzony pomyślnie.');
             } else {
-                // Tutaj możesz obsłużyć przypadek, gdy tworzenie użytkownika nie powiodło się
                 console.error('Błąd podczas tworzenia użytkownika:', response.statusText);
             }
         } catch (error) {
             console.error('Błąd podczas wysyłania żądania:', error);
+        }
+    };
+
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/auth/authenticate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('jwtToken', data.token);
+                console.log('token: ' + data.token);
+                console.log('Użytkownik zalogowany pomyślnie.'); // Powiadomienie w konsoli
+
+                const jwtToken = localStorage.getItem('jwtToken');
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwtToken}`
+                };
+
+
+                const secureResponse = await fetch('http://localhost:8080/api/v1/user', {
+                    method: 'GET',
+                    headers: headers
+                });
+
+                if (secureResponse.ok) {
+                    // Obsługa odpowiedzi zabezpieczonego żądania
+                    console.log('Pomyślnie pobrano dane zabezpieczone.');
+                } else {
+                    // Obsługa błędu zabezpieczonego żądania
+                    console.error('Błąd podczas pobierania danych zabezpieczonych:', secureResponse.statusText);
+                }
+            } else {
+                console.error('Błąd podczas logowania:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Błąd podczas wysyłania żądania:', error);
+        }
+    };
+
+    const handleSubmit = () => {
+        if (action === "Login") {
+            handleLogin();
+        } else {
+            handleSignUp();
         }
     };
 
@@ -62,13 +111,13 @@ const LoginSignup = () => {
             )}
 
             <div className="submit-container">
-                <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => { setAction("Sign Up") }}>Sign Up</div>
-                <div className={action === "Sign Up" ? "submit gray" : "submit"} onClick={() => { setAction("Login") }}>Login</div>
+                <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => setAction("Sign Up")}>Sign Up</div>
+                <div className={action === "Sign Up" ? "submit gray" : "submit"} onClick={() => setAction("Login")}>Login</div>
             </div>
 
-            {action === "Sign Up" ? (
+            {action === "Sign Up" || action === "Login" ? (
                 <div className="submit-container">
-                    <div className="submit" onClick={handleSignUp}>Submit</div>
+                    <div className="submit" onClick={handleSubmit}>Submit</div>
                 </div>
             ) : null}
 
