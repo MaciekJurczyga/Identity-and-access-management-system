@@ -44,6 +44,7 @@ const LoginSignup = () => {
                 const data = await response.json();
                 localStorage.setItem('jwtToken', data.token);
                 console.log('token: ' + data.token);
+                console.log('token: ' + data.token);
                 console.log('Użytkownik zalogowany pomyślnie.'); // Powiadomienie w konsoli
 
                 const jwtToken = localStorage.getItem('jwtToken');
