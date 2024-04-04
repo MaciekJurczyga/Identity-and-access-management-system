@@ -3,82 +3,45 @@ import './LoginSignup.css';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const LoginSignup = () => {
+    const navigator = useNavigate();
     const [action, setAction] = useState("Login");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const handleSignUp = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/v1/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, password }),
-            });
-
-            if (response.ok) {
-                console.log('Użytkownik został utworzony pomyślnie.');
-            } else {
-                console.error('Błąd podczas tworzenia użytkownika:', response.statusText);
-            }
+            const response = await axios.post('http://localhost:8080/api/v1/auth/register', { name, email, password });
+            console.log('Użytkownik został utworzony pomyślnie.');
+            setAction("Login");
         } catch (error) {
-            console.error('Błąd podczas wysyłania żądania:', error);
+            console.error('Błąd podczas tworzenia użytkownika:', error.message);
         }
     };
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/v1/auth/authenticate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem('jwtToken', data.token);
-                console.log('token: ' + data.token);
-                console.log('token: ' + data.token);
-                console.log('Użytkownik zalogowany pomyślnie.'); // Powiadomienie w konsoli
-
-                const jwtToken = localStorage.getItem('jwtToken');
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${jwtToken}`
-                };
-
-
-                const secureResponse = await fetch('http://localhost:8080/api/v1/user', {
-                    method: 'GET',
-                    headers: headers
-                });
-
-                if (secureResponse.ok) {
-                    // Obsługa odpowiedzi zabezpieczonego żądania
-                    console.log('Pomyślnie pobrano dane zabezpieczone.');
-                } else {
-                    // Obsługa błędu zabezpieczonego żądania
-                    console.error('Błąd podczas pobierania danych zabezpieczonych:', secureResponse.statusText);
-                }
-            } else {
-                console.error('Błąd podczas logowania:', response.statusText);
-            }
+            const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', { email, password });
+            const { token } = response.data;
+            localStorage.setItem('jwtToken', token);
+            console.log('Użytkownik zalogowany pomyślnie.');
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            navigator('/api/v1/user');
         } catch (error) {
-            console.error('Błąd podczas wysyłania żądania:', error);
+            console.error('Błąd podczas logowania:', error.message);
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (action === "Login") {
-            handleLogin();
+            await handleLogin();
         } else {
-            handleSignUp();
+            await handleSignUp();
         }
     };
 
@@ -121,6 +84,7 @@ const LoginSignup = () => {
                     <div className="submit" onClick={handleSubmit}>Submit</div>
                 </div>
             ) : null}
+
 
         </div>
     );
