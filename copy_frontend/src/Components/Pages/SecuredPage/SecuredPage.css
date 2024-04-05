@@ -1,0 +1,25 @@
+/* SecuredPage.css */
+.secured-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+
+
+}
+
+.centered-box {
+    text-align: center;
+    background-color: white;
+    border: 2px solid black;
+    padding: 70px;
+    max-width: 1500px;
+    margin-top: 50px;
+    font-size: 15px;
+}
+
+button {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}

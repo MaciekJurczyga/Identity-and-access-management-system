@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginSignup from './Components/Pages/StartingPanel/StartingPanel.jsx';
-import SecuredPage from './Components/Pages/SecuredPage/securedPage.js';
+import SecuredPage from './Components/Pages/SecuredPage/SecuredPage.js';
 const App = () => {
     return (
         <BrowserRouter>
