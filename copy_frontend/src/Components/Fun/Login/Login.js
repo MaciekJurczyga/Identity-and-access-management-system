@@ -1,7 +1,13 @@
+// authService.js
+
 import axios from 'axios';
+import validateLoginCredentials from './Login_Requirements.js';
 
 const login = async (email, password) => {
     try {
+        // Walidacja danych
+        validateLoginCredentials(email, password);
+
         localStorage.removeItem('jwtToken')
         const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', { email, password });
         const { token } = response.data;

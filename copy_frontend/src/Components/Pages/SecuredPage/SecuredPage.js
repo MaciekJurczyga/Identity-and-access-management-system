@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import fetchUserData from './../../Fun/FetchUserData';
+import fetchUserData from '../../Fun/FetchUserData/FetchUserData';
 import './SecuredPage.css'; // Importowanie pliku CSS dla stylizacji
 
 const SecuredPage = () => {
