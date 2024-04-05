@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LoginSignup from './Components/LoginSignup/LoginSignup.jsx';
-import SecuredPage from './Components/Pages/securedPage.js';
-
+import LoginSignup from './Components/Pages/StartingPanel/StartingPanel.jsx';
+import SecuredPage from './Components/Pages/SecuredPage/securedPage.js';
 const App = () => {
     return (
         <BrowserRouter>
@@ -15,3 +14,4 @@ const App = () => {
 };
 
 export default App;
+
