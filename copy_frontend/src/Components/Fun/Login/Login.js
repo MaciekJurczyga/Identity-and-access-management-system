@@ -18,7 +18,7 @@ const login = async (email, password) => {
     } catch (error) {
         if (error.response) {
             // Obsługa błędu odpowiedzi serwera (np. 404, 500)
-            console.error('Błąd podczas logowania:', error.response.data);
+            console.error('Błąd podczas logowania z serwera:', error.response.data);
         } else if (error.request) {
             // Obsługa braku odpowiedzi od serwera (np. brak połączenia)
             console.error('Brak odpowiedzi od serwera. Sprawdź połączenie internetowe.');

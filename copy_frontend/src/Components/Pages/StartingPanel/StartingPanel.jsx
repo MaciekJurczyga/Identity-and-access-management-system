@@ -5,7 +5,7 @@ import user_icon from './../../Assets/person.png';
 import email_icon from './../../Assets/person.png';
 import password_icon from './../../Assets/person.png';
 import register from '../../Fun/Register/Register';
-import login from '../../Fun/Login/Login';
+import  login  from '../../Fun/Login/Login';
 import { useNavigate } from 'react-router-dom';
 
 const LoginSignup = () => {
