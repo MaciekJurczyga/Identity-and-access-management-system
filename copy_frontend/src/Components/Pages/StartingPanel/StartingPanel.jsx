@@ -4,12 +4,8 @@ import user_icon from './../../Assets/person.png';
 import email_icon from './../../Assets/email.png';
 import password_icon from './../../Assets/password.png';
 import register from '../../Fun/Register/Register';
-<<<<<<< HEAD
 import  login  from '../../Fun/Login/Login';
-=======
-import login from '../../Fun/Login/Login';
 import PasswordStrengthChecker from "../../Fun/Register/PasswordStrengthChecker";
->>>>>>> 8b8cc904c7cd3b0503de807a8c34ea7be067879a
 import { useNavigate } from 'react-router-dom';
 
 const LoginSignup = () => {
