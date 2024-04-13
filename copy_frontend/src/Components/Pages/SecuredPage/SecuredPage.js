@@ -2,38 +2,55 @@ import React, { useState } from 'react';
 import fetchUserData from '../../Fun/FetchUserData/FetchUserData';
 import sendMessageToUser from '../../Fun/Message/Message';
 import './SecuredPage.css'; // Importowanie pliku CSS dla stylizacji
+import LogoutButton from '../../Fun/LogOut/Handle_Log_Out'
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 const SecuredPage = () => {
     const [responseData, setResponseData] = useState(null);
     const [showButton, setShowButton] = useState(true);
     const [message, setMessage] = useState('');
     const [messageSent, setMessageSent] = useState(false);
-
+    const navigator = useNavigate();
     const handleGetData = async () => {
         try {
             const data = await fetchUserData();
             setResponseData(data);
             setShowButton(false);
         } catch (error) {
-            console.error('Błąd podczas pobierania danych:', error.message);
-            if (error.message === 'Token wygasł. Proszę zalogować się ponownie.') {
+            if(error.response && error.response.status === 403){
+                navigator("/");
+                localStorage.removeItem("jwtToken");
+                axios.defaults.headers.common['Authorization'] = null;
                 alert('Token wygasł. Proszę zalogować się ponownie.');
-                // Tutaj możesz przekierować użytkownika do strony logowania
+            }
+            else{
+                console.log("wystąpił nieoczekiwany błąd")
             }
         }
     };
+
 
     const handleMessageSend = async () => {
         try {
             await sendMessageToUser(message);
             setMessageSent(true);
         } catch (error) {
-            console.error('Błąd podczas wysyłania wiadomości:', error.message);
+            if(error.response && error.response.status === 403){
+                navigator("/");
+                localStorage.removeItem("jwtToken");
+                axios.defaults.headers.common['Authorization'] = null;
+                alert('Token wygasł. Proszę zalogować się ponownie.');
+            }
+            console.error("Wystąpił nieoczekiwany błąd");
         }
     };
 
     return (
         <div className="secured-page-container">
+            <div className="log-out-button">
+                <LogoutButton/>
+            </div>
             <div className="centered-box">
                 {showButton && (
                     <div>

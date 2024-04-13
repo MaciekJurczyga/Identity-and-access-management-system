@@ -7,7 +7,7 @@ const register = async (name, email, password) => {
     try {
         // Walidacja danych
         validateCredentials(email, password);
-
+        localStorage.removeItem("jwtToken");
         // Wysłanie żądania rejestracji
         const response = await axios.post('http://localhost:8080/api/v1/auth/register', { name, email, password });
         console.log('Użytkownik został utworzony pomyślnie.');

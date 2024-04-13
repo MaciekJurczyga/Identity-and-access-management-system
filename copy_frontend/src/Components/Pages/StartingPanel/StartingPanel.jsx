@@ -1,11 +1,15 @@
-// LoginSignup.js
 import React, { useState } from 'react';
 import './StartingPanel.css';
 import user_icon from './../../Assets/person.png';
-import email_icon from './../../Assets/person.png';
-import password_icon from './../../Assets/person.png';
+import email_icon from './../../Assets/email.png';
+import password_icon from './../../Assets/password.png';
 import register from '../../Fun/Register/Register';
+<<<<<<< HEAD
 import  login  from '../../Fun/Login/Login';
+=======
+import login from '../../Fun/Login/Login';
+import PasswordStrengthChecker from "../../Fun/Register/PasswordStrengthChecker";
+>>>>>>> 8b8cc904c7cd3b0503de807a8c34ea7be067879a
 import { useNavigate } from 'react-router-dom';
 
 const LoginSignup = () => {
@@ -50,8 +54,15 @@ const LoginSignup = () => {
                 <div className="input">
                     <img src={password_icon} alt="" />
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    {action === "Sign Up" ? (<div>
+                        <PasswordStrengthChecker password={password} />
+                    </div>)
+                        : null}
+
+
                 </div>
             </div>
+
             {action === "Sign Up" ? null : (
                 <div className="forgot-password">Lost Password?
                     <span> Click Here!</span>
