@@ -23,7 +23,7 @@ const login = async (email, password) => {
         validateLoginCredentials(email, password);
 
         localStorage.removeItem('jwtToken');
-        const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', { email, password });
+        const response = await axios.post('https://localhost:443/api/v1/auth/authenticate', { email, password });
         const { token } = response.data;
         localStorage.setItem('jwtToken', token);
         console.log('Użytkownik zalogowany pomyślnie.');
@@ -37,9 +37,9 @@ const login = async (email, password) => {
         failedLoginAttempts++;
         lastFailedLoginTime = new Date().getTime();
 
-        if (error.response) {
+        if (error.response && error.response.status === 401 && error.response.data) {
             // Obsługa błędu odpowiedzi serwera (np. 404, 500)
-            console.error('Błąd podczas logowania z serwera:', error.response.data);
+            alert(error.response.data);
         } else if (error.request) {
             // Obsługa braku odpowiedzi od serwera (np. brak połączenia)
             console.error('Brak odpowiedzi od serwera. Sprawdź połączenie internetowe.');

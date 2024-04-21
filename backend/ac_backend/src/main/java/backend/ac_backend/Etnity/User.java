@@ -29,9 +29,11 @@ public class User implements UserDetails {
     @Column(name = "Passwords")
     private String password;
 
+
     // Dodajemy nowe pole przechowujące treść wiadomości użytkownika
     @Column(name = "MessageContent")
     private String messageContent;
+
 
     @Enumerated(EnumType.STRING)
     private Role role;

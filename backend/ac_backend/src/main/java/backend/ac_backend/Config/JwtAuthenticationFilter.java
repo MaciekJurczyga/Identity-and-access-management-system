@@ -56,11 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException ex) {
             // Obsłuż błąd JWT wygasłego, na przykład zwróć odpowiedź 403 Forbidden
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            System.out.println("Obsłużono błąd 403");
         } catch (AuthenticationCredentialsNotFoundException ex) {
             // Obsłuż brak uwierzytelnienia, na przykład zwróć odpowiedź 401 Unauthorized
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            System.out.println("Obsłużono błąd 401");
         }
     }
 }

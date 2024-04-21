@@ -7,8 +7,8 @@ const fetchUserData = async () => {
         if (!token) {
             throw new Error('Brak tokenu uwierzytelniającego.');
         }
-
-        const response = await axios.get('http://localhost:8080/api/v1/user', {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const response = await axios.get('https://localhost:443/api/v1/user', {
 
         });
 

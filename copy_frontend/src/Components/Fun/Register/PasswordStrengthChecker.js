@@ -1,7 +1,6 @@
 
-import React from 'react';
 
-const PasswordStrengthChecker = ({ password }) => {
+const PasswordStrengthChecker = ({ password, setPasswordColor }) => {
     const calculateStrength = (password) => {
         let strength = 0;
 
@@ -30,22 +29,19 @@ const PasswordStrengthChecker = ({ password }) => {
 
     const getStrengthColor = (strength) => {
         if (strength >= 5) {
-            return 'green';
+            return '#a4f562';
         } else if (strength >= 3) {
-            return 'orange';
+            return '#f39c4b';
         } else {
-            return 'red';
+            return '#e74343';
         }
     };
 
     const strength = calculateStrength(password);
     const color = getStrengthColor(strength);
 
-    return (
-        <div style={{ color: color }}>
-            Siła hasła: {color === 'green' ? 'Silne' : color === 'orange' ? 'Średnie' : 'Słabe'}
-        </div>
-    );
+    setPasswordColor(color);
+    return null;
 };
 
 export default PasswordStrengthChecker;

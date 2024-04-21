@@ -3,6 +3,7 @@ import './StartingPanel.css';
 import user_icon from './../../Assets/person.png';
 import email_icon from './../../Assets/email.png';
 import password_icon from './../../Assets/password.png';
+import show_password from './../../Assets/show.png'
 import register from '../../Fun/Register/Register';
 import  login  from '../../Fun/Login/Login';
 import PasswordStrengthChecker from "../../Fun/Register/PasswordStrengthChecker";
@@ -14,6 +15,10 @@ const LoginSignup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordConf, setPasswordConf] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConf, setShowPasswordConf] = useState(false);
+    const [passwordColor, setPasswordColor] = useState('#eaeaea');
 
     const handleSubmit = async () => {
         try {
@@ -21,8 +26,11 @@ const LoginSignup = () => {
                 await login(email, password);
                 navigator('/api/v1/user');
             } else {
-                await register(name, email, password);
-                setAction("Login");
+                await register(name, email, password, passwordConf);
+                if(password === passwordConf){
+                    setAction("Login");
+                }
+
             }
         } catch (error) {
             console.error('Błąd:', error.message);
@@ -47,16 +55,55 @@ const LoginSignup = () => {
                     <img src={email_icon} alt="" />
                     <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
-                <div className="input">
-                    <img src={password_icon} alt="" />
-                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    {action === "Sign Up" ? (<div>
-                        <PasswordStrengthChecker password={password} />
-                    </div>)
-                        : null}
+                <div className="input"  style={{ backgroundColor: action === "Sign Up" && password.length !== 0 ? passwordColor : '#eaeaea'}}>
+                        <img
+                            src={password_icon}
+                            alt=""
+                        />
 
-
+                    <input type={showPassword ? "text" : "password"}
+                           style={{opacity:1}}
+                           placeholder="Password" value={password}
+                           onChange={(e) => setPassword(e.target.value)} />
+                    <div>
+                        <button
+                            className="showPass"
+                            onMouseDown={() => setShowPassword(true)}
+                            onMouseUp={() => setShowPassword(false)}
+                            onClick={(e) => e.preventDefault()}>
+                            <img
+                                src={showPassword ? show_password : show_password}
+                                alt={showPassword ? "Hide" : "Show"}
+                                style={{ width: "24px", height: "24px" }}
+                            />
+                        </button>
+                    </div>
+                    {action === "Sign Up" && (
+                        <PasswordStrengthChecker password={password} setPasswordColor={setPasswordColor} />
+                    )}
                 </div>
+                {action === "Login" ? null : (
+                    <div className="input">
+                        <img src={password_icon} alt="" />
+                        <input type={showPasswordConf ? "text" : "password"}
+
+                               placeholder="Confirm Password" value={passwordConf}
+                               onChange={(e) => setPasswordConf(e.target.value)} />
+                        <div>
+                            <button
+                                className="showPass"
+                                onMouseDown={() => setShowPasswordConf(true)}
+                                onMouseUp={() => setShowPasswordConf(false)}
+                                onClick={(e) => e.preventDefault()}>
+                                <img
+                                    src={showPasswordConf ? show_password : show_password}
+                                    alt={showPasswordConf ? "Hide" : "Show"}
+                                    style={{ width: "24px", height: "24px" }}
+                                />
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {action === "Sign Up" ? null : (
