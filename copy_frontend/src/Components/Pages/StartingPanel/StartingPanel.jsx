@@ -108,7 +108,11 @@ const LoginSignup = () => {
 
             {action === "Sign Up" ? null : (
                 <div className="forgot-password">Lost Password?
-                    <span> Click Here!</span>
+                    <span>
+                        <a href="https://mitologia.fandom.com/pl/wiki/Syzyf" target="_blank">
+                              Click Here!
+                        </a>
+                    </span>
                 </div>
             )}
 

@@ -5,7 +5,7 @@ const validateLoginCredentials = (email, password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,10}$/;
 
     if (!emailRegex.test(email) || !passwordRegex.test(password)) {
-        alert('Niepoprawne dane logowania');
+        alert('Niepoprawne dane logowania niefajne');
         throw new Error('Niepoprawne dane logowania');
     }
 };
