@@ -1,5 +1,19 @@
-High level programming languages project created with **github.com/At1z**.
-**Maadi System Identity and Access Management** web application. 
-**Technologies**: Java, Spring, React.js, HTML, css, JavaScript, MySQL, JWT, AWS KMS.
-The goal is to provide a user possibility to create an account or/and login into already existing one.
-We mostly focus on the security of our app. We try our hardest to make the system as safe as possible, even though it's really tough to make it 100% safe.
+High level programming languages project created with **github.com/At1z**. <br>
+
+**Maadi Identity and Access Management System** web application. <br>
+<br>
+**Technologies used:**: 
+- Java
+- Spring
+- React.js
+-  HTML
+-  CSS
+-  JavaScript
+-  MySQL
+
+  
+The goal of this project was to create an IAM system with a high level of security. In order to introduce the security in our appliacation, we used JWT Tokens, Amazaon KMS, Regular Expressions
+comunnication based on HTTPS protocol, database hashing and the mechanizm of blocking an account.
+<br>
+
+Full presentation of the project [here](https://docs.google.com/presentation/d/1Hasui90Dc4ljEaAcKJ5oaXwTxmleM88C8cG3NKNK8OQ/edit#slide=id.p])
